@@ -66,7 +66,7 @@ public class Child {
 		this.address = address;
 	}
 
-	public void setGift(List<Gift> gift) {
+	public void setGifts(List<Gift> gift) {
 		this.gifts = gift;
 	}
 	

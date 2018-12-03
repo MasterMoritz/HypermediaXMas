@@ -6,13 +6,13 @@
 
 	<insert id="addChild" parameterType="Child"
 		useGeneratedKeys="true" keyProperty="id">
-		insert into child(name, address_id, gift_id)
-		values (#{name}, #{address.id}, #{gift.id})
+		insert into child(name, address_id)
+		values (#{name}, #{address.id})
 	</insert>
 
 	<update id="updateChild" parameterType="Child">
 		update child
-		set name=#{name}, address_id=#{address.id}, gift_id=#{gift.id} where id=#{id}
+		set name=#{name}, address_id=#{address.id} where id=#{id}
 	</update>
 
 	<delete id="removeChild" parameterType="Child">
@@ -43,7 +43,7 @@
 			<id property="id" column="address_id" />
 			<result property="text" column="text" />
 		</association>
-		<collection property="gift" javaType="ArrayList" ofType="Gift">
+		<collection property="gifts" javaType="ArrayList" ofType="Gift">
 			<id property="id" column="gift_id" />
 			<result property="description" column="description" />
 		</collection>
