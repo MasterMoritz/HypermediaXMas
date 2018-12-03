@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="im430.xmas.dao.ChildDAOImpl">
+
+	<insert id="addChild" parameterType="Child"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into child(name, address_id, gift_id)
+		values (#{name}, #{address.id}, #{gift.id})
+	</insert>
+
+	<update id="updateChild" parameterType="Child">
+		update child
+		set name=#{name}, address_id=#{address.id}, gift_id=#{gift.id} where id=#{id}
+	</update>
+
+	<delete id="removeChild" parameterType="Child">
+		delete from
+		child where id=#{id}
+	</delete>
+	
+	<insert id="addGift" parameterType="java.util.Map" keyProperty="gift.id">
+		insert into gift (description, child_id) values (#{gift.description}, #{child.id})
+	</insert>
+	<delete id="removeGift" parameterType="Gift">
+		delete from gift where id=#{id}
+	</delete>
+	
+	<select id="getAllChildren" resultMap="childResult">
+		SELECT child.id, child.name, child.address_id, address.text, gift.id as gift_id, gift.description from child LEFT JOIN address on child.address_id = address.id LEFT JOIN gift ON gift.child_id = child.id
+	</select>
+	
+	<select id="getChildById" resultMap="childResult"
+		parameterType="int">
+		select child.id, child.name, child.address_id, address.text, gift.id as gift_id, gift.description from child LEFT JOIN address on child.address_id = address.id LEFT JOIN gift ON gift.child_id = child.id where child.id=#{id}
+	</select>
+	
+	<resultMap id="childResult" type="Child">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<association property="address" javaType="Address" >
+			<id property="id" column="address_id" />
+			<result property="text" column="text" />
+		</association>
+		<collection property="gift" javaType="ArrayList" ofType="Gift">
+			<id property="id" column="gift_id" />
+			<result property="description" column="description" />
+		</collection>
+	</resultMap>
+</mapper>

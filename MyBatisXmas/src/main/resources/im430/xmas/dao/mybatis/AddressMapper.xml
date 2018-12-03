@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="im430.xmas.dao.AddressDAOImpl">
+
+	<insert id="addAddress" parameterType="Address"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into address(text)
+		values (#{text})
+	</insert>
+
+	<update id="updateAddress" parameterType="Address">
+		update address
+		set text=#{text} where id=#{id}
+	</update>
+
+	<delete id="removeAddress" parameterType="Address">
+		delete from
+		address where id=#{id}
+	</delete>
+
+	<select id="getAllAddresses" resultMap="addressResult">
+		select id, text from address order by id
+	</select>
+
+	<select id="getAddressById" resultMap="addressResult"
+		parameterType="int">
+		select id, text from address where id=#{id}
+	</select>
+	
+	<resultMap id="addressResult" type="Address">
+		<id property="id" column="id" />
+		<result property="text" column="text" />
+	</resultMap>
+	
+</mapper>
