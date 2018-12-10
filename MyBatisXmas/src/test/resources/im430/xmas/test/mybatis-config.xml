@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="Address"
+			type="im430.xmas.business.Address" />
+		<typeAlias alias="Child" type="im430.xmas.business.Child" />
+		<typeAlias alias="Gift" type="im430.xmas.business.Gift" />
+	</typeAliases>
+	<mappers>
+		<mapper
+			resource="im430/xmas/dao/mybatis/AddressMapper.xml" />
+		<mapper resource="im430/xmas/dao/mybatis/ChildMapper.xml" />
+	</mappers>
+</configuration>

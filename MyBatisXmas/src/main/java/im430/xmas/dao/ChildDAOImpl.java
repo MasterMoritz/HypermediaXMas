@@ -73,4 +73,17 @@ public class ChildDAOImpl implements ChildDAO {
 		sqlSession.delete(BASE_PATH + ".removeGift", gift);
 		child.removeGift(gift);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Child getChildByIdNp1(int id) {
+		return sqlSession.selectOne(BASE_PATH + ".getChildByIdNp1", id);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Child> getAllChildrenNp1() {
+		return sqlSession.selectList(BASE_PATH + ".getAllChildrenNp1");
+	}
+	
 }

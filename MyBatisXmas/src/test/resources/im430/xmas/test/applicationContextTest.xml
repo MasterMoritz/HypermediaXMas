@@ -13,7 +13,7 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 	<context:annotation-config />
 	<context:property-placeholder
-		location="WEB-INF/jdbc.properties" />
+		location="/im430/xmas/test/jdbc.properties" />
 
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp2.BasicDataSource">
@@ -43,7 +43,7 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation"
-			value="/WEB-INF/mybatis-config.xml" />
+			value="/im430/xmas/test/mybatis-config.xml" />
 	</bean>
 
 	<bean id="sqlSession"

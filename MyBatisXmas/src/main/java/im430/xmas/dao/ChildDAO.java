@@ -19,4 +19,9 @@ public interface ChildDAO {
 	void addGift(Child child, Gift gift);
 
 	void removeGift(Child child, Gift gift);
+
+	Child getChildByIdNp1(int id);
+
+	List<Child> getAllChildrenNp1();
+	
 }

@@ -6,13 +6,13 @@
 
 	<insert id="addChild" parameterType="Child"
 		useGeneratedKeys="true" keyProperty="id">
-		insert into child(name, address_id, gift_id)
-		values (#{name}, #{address.id}, #{gift.id})
+		insert into child(name, address_id)
+		values (#{name}, #{address.id})
 	</insert>
 
 	<update id="updateChild" parameterType="Child">
 		update child
-		set name=#{name}, address_id=#{address.id}, gift_id=#{gift.id} where id=#{id}
+		set name=#{name}, address_id=#{address.id} where id=#{id}
 	</update>
 
 	<delete id="removeChild" parameterType="Child">
@@ -34,7 +34,7 @@
 	<select id="getChildById" resultMap="childResult"
 		parameterType="int">
 		select child.id, child.name, child.address_id, address.text, gift.id as gift_id, gift.description from child LEFT JOIN address on child.address_id = address.id LEFT JOIN gift ON gift.child_id = child.id where child.id=#{id}
-	</select>
+	</select>	
 	
 	<resultMap id="childResult" type="Child">
 		<id property="id" column="id" />
@@ -43,9 +43,31 @@
 			<id property="id" column="address_id" />
 			<result property="text" column="text" />
 		</association>
-		<collection property="gift" javaType="ArrayList" ofType="Gift">
+		<collection property="gifts" javaType="ArrayList" ofType="Gift">
 			<id property="id" column="gift_id" />
 			<result property="description" column="description" />
 		</collection>
 	</resultMap>
+	
+	<select id="getAllChildrenNp1" resultMap="childResult">
+ 	select id, name, address_id from child order by name
+	</select> 
+	
+	<select id="getChildByIdNp1" resultMap="childResult"
+ 	parameterType="int">
+ 	select id, name, address_id from child where id=#{id}
+	</select> 
+	
+		<resultMap id="childResultNp1" type="Child">
+	<id property="id" column="id" />
+	<result property="name" column="name" />
+	<association property="address" javaType="Address" 
+	select="im430.xmas.dao.AddressDAOImpl.getAddressById" column="address_id" />
+	<collection property="gifts" javaType="ArrayList" ofType="Gift" select="getGifts" column="id" />
+	</resultMap>
+	
+	<select id="getGifts" resultType="Gift" parameterType="int"> 
+		select id, description from gift where child_id=#{value}
+	</select>
+	
 </mapper>
