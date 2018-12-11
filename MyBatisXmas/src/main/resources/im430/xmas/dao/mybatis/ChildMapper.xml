@@ -49,24 +49,22 @@
 		</collection>
 	</resultMap>
 	
-	<select id="getAllChildrenNp1" resultMap="childResult">
- 	select id, name, address_id from child order by name
+	<select id="getAllChildrenNp1" resultMap="childResultNp1">
+ 		select id, name, address_id from child order by name
 	</select> 
 	
-	<select id="getChildByIdNp1" resultMap="childResult"
- 	parameterType="int">
- 	select id, name, address_id from child where id=#{id}
+	<select id="getChildByIdNp1" resultMap="childResultNp1" parameterType="int">
+ 		select id, name, address_id from child where id=#{id}
 	</select> 
 	
-		<resultMap id="childResultNp1" type="Child">
-	<id property="id" column="id" />
-	<result property="name" column="name" />
-	<association property="address" javaType="Address" 
-	select="im430.xmas.dao.AddressDAOImpl.getAddressById" column="address_id" />
-	<collection property="gifts" javaType="ArrayList" ofType="Gift" select="getGifts" column="id" />
+	<resultMap id="childResultNp1" type="Child">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<association property="address" javaType="Address" select="im430.xmas.dao.AddressDAOImpl.getAddressById" column="address_id" />
+		<collection property="gifts" javaType="ArrayList" ofType="Gift" select="getGift" column="id" />
 	</resultMap>
 	
-	<select id="getGifts" resultType="Gift" parameterType="int"> 
+	<select id="getGift" resultType="Gift" parameterType="int"> 
 		select id, description from gift where child_id=#{value}
 	</select>
 	
